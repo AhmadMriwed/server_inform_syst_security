@@ -2,8 +2,24 @@
 <project version="4">
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
+  </component>
+  <component name="DBNavigator.Project.DataExportManager">
+    <export-instructions>
+      <create-header value="true" />
+      <friendly-headers value="false" />
+      <quote-values-containing-separator value="true" />
+      <quote-all-values value="false" />
+      <value-separator value="" />
+      <file-name value="" />
+      <file-location value="" />
+      <scope value="GLOBAL" />
+      <destination value="FILE" />
+      <format value="EXCEL" />
+      <charset value="windows-1252" />
+      <charset value="windows-1252" />
+    </export-instructions>
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
     <autoscroll-to-editor value="false" />
@@ -20,12 +36,12 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="ad4254c8-4463-433c-9f8e-777513dcbb19" object-ref="schemas/lhma/tables/client" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="ad4254c8-4463-433c-9f8e-777513dcbb19" dataset="lhma.client" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="ad4254c8-4463-433c-9f8e-777513dcbb19" dataset="lhma.message" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="ad4254c8-4463-433c-9f8e-777513dcbb19" dataset="lhma.numbers" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />

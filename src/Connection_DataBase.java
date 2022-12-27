@@ -1,4 +1,8 @@
 import com.Client;
+import database.Repository;
+import model.ClientModel;
+import model.MessageModel;
+import model.NumberModel;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -184,20 +188,31 @@ public class Connection_DataBase {
      */
     public static void main(String[] args) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/lhma", "root", ""
-            );
 
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from client");
-            while (resultSet.next()) {
-                System.out.println(resultSet.getInt(1) + " " + resultSet.getString(2) + " " + resultSet.getString(3));
-                ;
-            }
-            connection.close();
-        } catch (Exception e) {
+
+            //ClientModel clientModel= (ClientModel) Repository.saveNumber(new NumberModel(1,2)).getModel();
+           // System.out.println( clientModel);
+            System.out.println( Repository.updateMessage(new MessageModel((long) 2167272,"jj",1,2,true,false)).getMessage());
+
+        }catch (Exception e){
             System.out.println(e);
         }
+
+//        try {
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//            Connection connection = DriverManager.getConnection(
+//                    "jdbc:mysql://localhost:3306/lhma", "root", ""
+//            );
+//
+//            Statement statement = connection.createStatement();
+//            ResultSet resultSet = statement.executeQuery("select * from client");
+//            while (resultSet.next()) {
+//                System.out.println(resultSet.getInt(1) + " " + resultSet.getString(2) + " " + resultSet.getString(3));
+//                ;
+//            }
+//            connection.close();
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
     }
 }
