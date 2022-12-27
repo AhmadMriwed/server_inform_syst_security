@@ -13,8 +13,8 @@ public class MessageModel implements Model{
     public boolean checkSend=false;
     public boolean checkRec=false;
 
-
-    public MessageModel(Long message_id,String text, int send_id, int rec_id,Date date, boolean checkSend,boolean checkRec){
+public MessageModel(){}
+    public MessageModel(Long message_id, String text, int send_id, int rec_id, Date date, boolean checkSend, boolean checkRec){
         this.message_id=message_id;
         this.text=text;
         this.send_id=send_id;
@@ -23,7 +23,7 @@ public class MessageModel implements Model{
         this.checkRec=checkRec;
         this.checkSend=checkSend;
     }
-    public MessageModel(Long message_id,String text, int send_id, int rec_id, boolean checkSend,boolean checkRec){
+    public MessageModel(Long message_id, String text, int send_id, int rec_id, boolean checkSend, boolean checkRec){
         this.message_id=message_id;
         this.text=text;
         this.send_id=send_id;
@@ -46,6 +46,7 @@ public class MessageModel implements Model{
         map.put("date",date);
         map.put("checkSend",checkSend);
         map.put("checkRec",checkRec);
+        map.put("message_id",message_id);
         return map;
     }
 
@@ -55,6 +56,7 @@ public class MessageModel implements Model{
         this.text= (String) map.get("text");
         this.send_id= (int) map.get("send_id");
         this.rec_id= (int) map.get("rec_id");
+        this.date= (Date) map.get("date");
         this.checkSend= (boolean) map.get("checkSend");
         this.checkRec= (boolean) map.get("checkRec");
         return this;

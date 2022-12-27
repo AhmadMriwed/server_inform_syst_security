@@ -23,13 +23,14 @@ class temp extends  Thread{
 
                 // Read modify
                 // TODO here
-                Map<String, Object> map = new HashMap<>();
                 Msg msg= new Msg();
                 msg.status=true;
                 msg.message="message";
-                msg.body=new ClientModel();
+               // msg.body=new ClientModel();
                 msg.fromMap((Map<String, Object>) inFromClient.readObject());
                 System.out.println(msg.toMap());
+                outToClient.writeObject(msg.toMap());
+                System.out.println("ok");
 //                /* Modify the message object */
 //                inMsg.setMessage(inMsg.getMessage().toUpperCase());
 //                inMsg.setIndex(5);

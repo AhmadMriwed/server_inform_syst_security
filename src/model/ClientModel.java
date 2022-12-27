@@ -9,6 +9,7 @@ public class ClientModel implements Model{
     int number;
     String password;
     String name="";
+    int countMessage=0;
     public ClientModel(int number, String password, String name){
         this.name=name;
         this.number=number;
@@ -32,6 +33,7 @@ public class ClientModel implements Model{
         map.put("number",number);
         map.put("password","");
         map.put("name",name);
+        map.put("countMessage",countMessage);
         return map;
     }
 
@@ -40,7 +42,12 @@ public class ClientModel implements Model{
         this.name= (String) map.get("name");
         this.password= (String) map.get("password");
         this.number= (int) map.get("number");
+        this.countMessage= (int) map.get("countMessage");
         return this;
+    }
+
+    public void setCountMessage(int countMessage) {
+        this.countMessage = countMessage;
     }
 
     public int getNumber() {
