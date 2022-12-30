@@ -1,9 +1,10 @@
 package model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NumberModel implements Model{
+public class NumberModel implements Model, Serializable {
     long number_id;
     int client_number;
     int number;

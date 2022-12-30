@@ -1,11 +1,12 @@
 package model;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ClientModel implements Model{
+public class ClientModel implements Model, Serializable {
     int number;
     String password;
     String name="";
@@ -14,6 +15,11 @@ public class ClientModel implements Model{
         this.name=name;
         this.number=number;
         this.password=password;
+    }
+    public ClientModel(int number, String password, String name,int countMessage){
+        this.name=name;
+        this.number=number;
+        this.countMessage=countMessage;
     }
     public ClientModel(){
         this.name="";

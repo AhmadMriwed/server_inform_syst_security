@@ -1,10 +1,11 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MessageModel implements Model{
+public class MessageModel implements Model, Serializable {
     public Long message_id;
     public String text;
     public int send_id;

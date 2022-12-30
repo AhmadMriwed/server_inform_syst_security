@@ -98,9 +98,8 @@ public class Repository {
             else {
                 statement = connection.createStatement();
 
-
                 numberModel.setNumber_id((numberModel.getNumber()+new Date(System.currentTimeMillis()).getTime())/999);
-                int res= statement.executeUpdate("INSERT INTO numbers (number_id ,client_number,number) VALUES ( '"+numberModel.getNumber()+"','"+numberModel.getClient_number()+"','"+numberModel.getNumber()+"')",Statement.RETURN_GENERATED_KEYS);
+                int res= statement.executeUpdate("INSERT INTO numbers (number_id ,client_number,number) VALUES ( '"+numberModel.getNumber_id()+"','"+numberModel.getClient_number()+"','"+numberModel.getNumber()+"')",Statement.RETURN_GENERATED_KEYS);
                 return new ResultModel(numberModel,"save number to notes done ",true);
             }
         } catch (SQLException throwables) {
@@ -118,10 +117,12 @@ public class Repository {
     static public ResultModel getNumbersByNumber(int number){
         try {
             connect();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM `numbers` WHERE client_number= "+ number+" ");
+
+            ResultSet resultSet = statement.executeQuery("SELECT client.number,client.name,client.password FROM `numbers`,client WHERE client.number=numbers.number And client_number= "+ number);
+
             List<Model> moduleList=new ArrayList<>();
             while(resultSet.next())
-                moduleList.add(fromDatabaseToNumberModel(resultSet));
+                moduleList.add(fromDatabaseToClientModel(resultSet));
             return new ResultModel("Fetch numbers done",true,moduleList);
 
         } catch (SQLException throwables) {
@@ -139,7 +140,6 @@ public class Repository {
     static public ResultModel saveMessage(MessageModel messageModel){
         try {
             connect();
-
             ResultSet resultExitSend_id = statement.executeQuery("SELECT * FROM `client` WHERE number= "+ messageModel.send_id);
             statement = connection.createStatement();
             ResultSet resultExitRec_id = statement.executeQuery("SELECT * FROM `client` WHERE number= "+ messageModel.rec_id);
@@ -158,6 +158,7 @@ public class Repository {
                 return new ResultModel(messageModel,"save message done ",true);
             }
         } catch (SQLException throwables) {
+
             // System.out.println(throwables);
         } catch (NoSuchAlgorithmException e) {
             //System.out.println(e);
@@ -172,11 +173,77 @@ public class Repository {
     static public ResultModel getMessagesByClient(int send_id,int rec_id){
         try {
             connect();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM `message` WHERE send_id= "+ send_id+" And "+"rec_id= "+ rec_id);
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM `message` WHERE (send_id= "+ send_id+" And "+"rec_id= "+ rec_id+")");
             List<Model> moduleList=new ArrayList<>();
             while(resultSet.next())
                 moduleList.add(fromDatabaseToMessageModel(resultSet));
             return new ResultModel("Fetch messages done",true,moduleList);
+
+        } catch (SQLException throwables) {
+            // System.out.println(throwables);
+        } catch (NoSuchAlgorithmException e) {
+            //System.out.println(e);
+        } catch (InvalidKeySpecException e) {
+            //System.out.println(e);
+        }catch (Exception e) {
+            //e.printStackTrace();
+            //System.out.println(e);
+        }
+        return new ResultModel(null,"database error");
+    }
+    static public ResultModel getAllMessagesByClient(int send_id,int rec_id){
+        try {
+            connect();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM `message` WHERE (send_id= "+ send_id+" And "+"rec_id= "+ rec_id+") OR (send_id= "+ rec_id+" And "+"rec_id= "+ send_id+") ");
+            List<Model> moduleList=new ArrayList<>();
+            while(resultSet.next())
+                moduleList.add(fromDatabaseToMessageModel(resultSet));
+            return new ResultModel("Fetch messages done",true,moduleList);
+
+        } catch (SQLException throwables) {
+            // System.out.println(throwables);
+        } catch (NoSuchAlgorithmException e) {
+            //System.out.println(e);
+        } catch (InvalidKeySpecException e) {
+            //System.out.println(e);
+        }catch (Exception e) {
+            //e.printStackTrace();
+            //System.out.println(e);
+        }
+        return new ResultModel(null,"database error");
+    }
+    static public ResultModel getSendingClientBySend_idAndRec_idAndCheck_rec(int send_id,int rec_id,boolean checkRec){
+        try {
+            connect();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM `message` WHERE (send_id= "+ send_id+" And "+"rec_id= "+ rec_id+" And checkRec= "+ checkRec+") ");
+            List<Model> moduleList=new ArrayList<>();
+            while(resultSet.next())
+                moduleList.add(fromDatabaseToMessageModel(resultSet));
+            return new ResultModel("Fetch Sending messages done",true,moduleList);
+
+        } catch (SQLException throwables) {
+            // System.out.println(throwables);
+        } catch (NoSuchAlgorithmException e) {
+            //System.out.println(e);
+        } catch (InvalidKeySpecException e) {
+            //System.out.println(e);
+        }catch (Exception e) {
+            //e.printStackTrace();
+            //System.out.println(e);
+        }
+        return new ResultModel(null,"database error");
+    }
+    static public ResultModel getSendingClientByRec_idAndCheck_rec(int rec_id,boolean checkRec){
+        try {
+            connect();
+           boolean checkCreateView = statement.execute("CREATE OR REPLACE  VIEW clientMsg AS SELECT send_id as number,COUNT(send_id) as countMessage FROM `message` WHERE checkRec= "+ checkRec
+                    +" And "+"rec_id= "+ rec_id+" GROUP BY send_id");
+            ResultSet resultSet = statement.executeQuery("SELECT client.number,client.password,client.name,msg.countMessage FROM `client`,clientMsg as msg WHERE client.number= msg.number");
+            List<Model> moduleList=new ArrayList<>();
+
+            while(resultSet.next())
+                moduleList.add(fromDatabaseToClientModelWithCount(resultSet));
+            return new ResultModel("Fetch Sending Client done",true,moduleList);
 
         } catch (SQLException throwables) {
             // System.out.println(throwables);
@@ -239,12 +306,19 @@ public class Repository {
         }
         return new ResultModel(null,"database error");
     }
-
     public  static ClientModel fromDatabaseToClientModel(ResultSet resultSet) throws Exception{
         return new ClientModel(
                 resultSet.getInt(1),
                 resultSet.getString(2),
                 resultSet.getString(3)
+        );
+    }
+    public  static ClientModel fromDatabaseToClientModelWithCount(ResultSet resultSet) throws Exception{
+        return new ClientModel(
+                resultSet.getInt(1),
+                resultSet.getString(2),
+                resultSet.getString(3),
+                resultSet.getInt(4)
         );
     }
     public  static NumberModel fromDatabaseToNumberModel(ResultSet resultSet) throws Exception{

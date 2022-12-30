@@ -1,6 +1,9 @@
 package com;
+import database.Service;
 import model.ClientModel;
+import model.NumberModel;
 import request_response.Msg;
+import security.SelfSignedCertificateGeneration;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -84,8 +87,24 @@ public class Server {
 //            pr.println("yes");
 //            pr.flush();
 
-        temp t=new temp();
-        t.run();
+        //temp t=new temp();
+
+       // new SelfSignedCertificateGeneration().selfSignedCertificateGeneration();
+      //  new SelfSignedCertificateGeneration().selfSignedCertificateGeneration();
+       // ServerSocket welcomeSocket = new ServerSocket(5000);
+       // ServerHandler serverHandler=new ServerHandler(welcomeSocket);
+     //   System.out.println( Service.addNumberToClient(new NumberModel(2,1)).getMessage());
+        ServerController serverController=new ServerController();
+        serverController.start();
+
+
+       // serverHandler.run();
+//        while (true)
+//            if (serverHandler.server==null){
+//                //System.out.println("start server");
+//                serverHandler.server=welcomeSocket;
+//                serverHandler.run();
+//            }
 
     }
 }
