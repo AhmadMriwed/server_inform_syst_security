@@ -14,9 +14,9 @@ import java.util.concurrent.FutureTask;
 
 public class Repository {
 
-   static Statement statement = null;
-   static Connection connection = null;
-   static public ResultModel saveClient(ClientModel clientModel){
+    Statement statement = null;
+    Connection connection = null;
+    public ResultModel saveClient(ClientModel clientModel){
            try {
                connect();
                ResultSet resultExitNumber = statement.executeQuery("SELECT * FROM `client` WHERE number= "+ clientModel.getNumber()+" ");
@@ -38,7 +38,7 @@ public class Repository {
            }
        return new ResultModel(null,"database error");
    }
-    static public ResultModel getClientByNumber(int number){
+     public ResultModel getClientByNumber(int number){
         try {
             connect();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM `client` WHERE number= "+ number+" ");
@@ -59,7 +59,7 @@ public class Repository {
         }
         return new ResultModel(null,"database error");
     }
-    static public ResultModel getClientByNumberAndPassword(int number,String password){
+     public ResultModel getClientByNumberAndPassword(int number,String password){
         try {
             connect();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM `client` WHERE number= "+ number+" And "+"password= \""+ password+"\"");
@@ -80,7 +80,7 @@ public class Repository {
         }
         return new ResultModel(null,"database error");
     }
-    static public ResultModel saveNumber(NumberModel numberModel){
+     public ResultModel saveNumber(NumberModel numberModel){
         try {
             connect();
 
@@ -114,7 +114,7 @@ public class Repository {
         }
         return new ResultModel(null,"database error");
     }
-    static public ResultModel getNumbersByNumber(int number){
+     public ResultModel getNumbersByNumber(int number){
         try {
             connect();
 
@@ -137,7 +137,7 @@ public class Repository {
         }
         return new ResultModel(null,"database error");
     }
-    static public ResultModel saveMessage(MessageModel messageModel){
+     public ResultModel saveMessage(MessageModel messageModel){
         try {
             connect();
             ResultSet resultExitSend_id = statement.executeQuery("SELECT * FROM `client` WHERE number= "+ messageModel.send_id);
@@ -170,7 +170,7 @@ public class Repository {
         }
         return new ResultModel(null,"database error");
     }
-    static public ResultModel getMessagesByClient(int send_id,int rec_id){
+     public ResultModel getMessagesByClient(int send_id,int rec_id){
         try {
             connect();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM `message` WHERE (send_id= "+ send_id+" And "+"rec_id= "+ rec_id+")");
@@ -191,7 +191,7 @@ public class Repository {
         }
         return new ResultModel(null,"database error");
     }
-    static public ResultModel getAllMessagesByClient(int send_id,int rec_id){
+     public ResultModel getAllMessagesByClient(int send_id,int rec_id){
         try {
             connect();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM `message` WHERE (send_id= "+ send_id+" And "+"rec_id= "+ rec_id+") OR (send_id= "+ rec_id+" And "+"rec_id= "+ send_id+") ");
@@ -212,7 +212,7 @@ public class Repository {
         }
         return new ResultModel(null,"database error");
     }
-    static public ResultModel getSendingClientBySend_idAndRec_idAndCheck_rec(int send_id,int rec_id,boolean checkRec){
+     public ResultModel getSendingClientBySend_idAndRec_idAndCheck_rec(int send_id,int rec_id,boolean checkRec){
         try {
             connect();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM `message` WHERE (send_id= "+ send_id+" And "+"rec_id= "+ rec_id+" And checkRec= "+ checkRec+") ");
@@ -233,7 +233,7 @@ public class Repository {
         }
         return new ResultModel(null,"database error");
     }
-    static public ResultModel getSendingClientByRec_idAndCheck_rec(int rec_id,boolean checkRec){
+     public ResultModel getSendingClientByRec_idAndCheck_rec(int rec_id,boolean checkRec){
         try {
             connect();
            boolean checkCreateView = statement.execute("CREATE OR REPLACE  VIEW clientMsg AS SELECT send_id as number,COUNT(send_id) as countMessage FROM `message` WHERE checkRec= "+ checkRec
@@ -257,7 +257,7 @@ public class Repository {
         }
         return new ResultModel(null,"database error");
     }
-    static public ResultModel getMessageById(long message_id){
+     public ResultModel getMessageById(long message_id){
         try {
             connect();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM `message` WHERE message_id= "+ message_id);
@@ -279,7 +279,7 @@ public class Repository {
         }
         return new ResultModel(null,"database error");
     }
-    static public ResultModel updateMessage(MessageModel messageModel){
+     public ResultModel updateMessage(MessageModel messageModel){
         try {
             connect();
 
@@ -306,14 +306,14 @@ public class Repository {
         }
         return new ResultModel(null,"database error");
     }
-    public  static ClientModel fromDatabaseToClientModel(ResultSet resultSet) throws Exception{
+    public   ClientModel fromDatabaseToClientModel(ResultSet resultSet) throws Exception{
         return new ClientModel(
                 resultSet.getInt(1),
                 resultSet.getString(2),
                 resultSet.getString(3)
         );
     }
-    public  static ClientModel fromDatabaseToClientModelWithCount(ResultSet resultSet) throws Exception{
+    public   ClientModel fromDatabaseToClientModelWithCount(ResultSet resultSet) throws Exception{
         return new ClientModel(
                 resultSet.getInt(1),
                 resultSet.getString(2),
@@ -321,14 +321,14 @@ public class Repository {
                 resultSet.getInt(4)
         );
     }
-    public  static NumberModel fromDatabaseToNumberModel(ResultSet resultSet) throws Exception{
+    public   NumberModel fromDatabaseToNumberModel(ResultSet resultSet) throws Exception{
         return new NumberModel(
                 resultSet.getInt(1),
                 resultSet.getInt(2),
                 resultSet.getInt(3)
         );
     }
-    public  static MessageModel fromDatabaseToMessageModel(ResultSet resultSet) throws Exception{
+    public   MessageModel fromDatabaseToMessageModel(ResultSet resultSet) throws Exception{
         return new MessageModel(
                 resultSet.getLong(1),
                 resultSet.getString(2),
@@ -340,7 +340,7 @@ public class Repository {
         );
     }
 
-   static public boolean connect() throws  Exception {
+    public boolean connect() throws  Exception {
         String database="jdbc:mysql://localhost:3306/lhma";
         String userName="root";
         String password="";

@@ -6,7 +6,6 @@ import model.MessageModel;
 import model.Model;
 import model.NumberModel;
 
-import javax.crypto.spec.IvParameterSpec;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,18 +20,22 @@ public class Msg implements Serializable {
     public boolean status=false;
     public String message;
     public String mac;
-    public byte[] salt;
-    public IvParameterSpec iv;
     public String securityType= SecurityType.Zero;
+    public byte[] salt;
+    public byte[] iv;
+
     public Map<String,Object> toMap(){
         Map<String,Object> msg=new HashMap<>();
         msg.put("header",header.toMap());
         msg.put("status",status);
         msg.put("message",message);
         msg.put("mac",mac);
-        msg.put("salt",salt);
+            msg.put("salt",salt);
+
+
         msg.put("iv",iv);
         msg.put("securityType",securityType);
+
         if(body!=null)
         msg.put("body",body.toMap());
         else msg.put("body",null);
@@ -42,6 +45,7 @@ public class Msg implements Serializable {
                 bodyMap.add(model.toMap());
             }
             msg.put("bodyList",bodyMap);
+
      return msg;
     }
     public Msg fromMap(Map<String,Object> map){
@@ -49,20 +53,20 @@ public class Msg implements Serializable {
         status= (boolean) map.get("status");
         message= (String) map.get("message");
         mac= (String) map.get("mac");
-        iv= (IvParameterSpec) map.get("iv");
-        salt= ( byte[]) map.get("salt");
+
+            salt= ( byte[]) map.get("salt");
+
+        iv= (byte[]) map.get("iv");
         securityType= ( String) map.get("securityType");
+
         if(map.get("body")!=null){
             body  = fromBody(((Map<String, Object>) map.get("body")));
-        }
-
+        };
         bodyList.clear();
         for (var tempMap:(List) map.get("bodyList")
         ) {
             bodyList.add(fromBody((Map<String, Object>) tempMap));
         }
-
-
         return  this;
     }
     Model fromBody(Map<String,Object> map){

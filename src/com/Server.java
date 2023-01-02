@@ -3,11 +3,15 @@ import database.Service;
 import model.ClientModel;
 import model.NumberModel;
 import request_response.Msg;
+import security.PGP;
 import security.SelfSignedCertificateGeneration;
 
+import javax.crypto.NoSuchPaddingException;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.util.HashMap;
 import java.util.Map;
 class temp extends  Thread{
@@ -54,7 +58,7 @@ class temp extends  Thread{
     }
 }
 public class Server {
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException, ClassNotFoundException {
 //        ServerSocket ss = new ServerSocket(4999);
 //
 //
@@ -94,6 +98,7 @@ public class Server {
        // ServerSocket welcomeSocket = new ServerSocket(5000);
        // ServerHandler serverHandler=new ServerHandler(welcomeSocket);
      //   System.out.println( Service.addNumberToClient(new NumberModel(2,1)).getMessage());
+        new PGP();
         ServerController serverController=new ServerController();
         serverController.start();
 

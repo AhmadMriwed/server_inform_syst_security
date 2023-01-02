@@ -8,108 +8,108 @@ import model.ResultModel;
 import java.util.List;
 
 public class Service {
-    static  private  Repository repository=new Repository();
+      private  Repository repository=new Repository();
 
-    static public ResultModel signUp(ClientModel clientModel){
+     public ResultModel signUp(ClientModel clientModel){
         try {
-            return   Repository.saveClient(clientModel);
+            return   repository.saveClient(clientModel);
         }catch (Exception e){
             System.out.println(e);
         }
         return new ResultModel(null,"error");
     }
-    static public ResultModel logIn(int number,String password){
+     public ResultModel logIn(int number,String password){
         try {
-            return   Repository.getClientByNumberAndPassword(number, password);
+            return   repository.getClientByNumberAndPassword(number, password);
         }catch (Exception e){
             System.out.println(e);
         }
         return new ResultModel(null,"error");
     }
-    static public ResultModel searchByNumber(int number){
+     public ResultModel searchByNumber(int number){
         try {
-            return   Repository.getClientByNumber(number);
+            return   repository.getClientByNumber(number);
         }catch (Exception e){
             System.out.println(e);
         }
         return new ResultModel(null,"error");
     }
-    static public ResultModel ShowSendingNumbers(int number){
+     public ResultModel ShowSendingNumbers(int number){
         try {
-            return   Repository.getSendingClientByRec_idAndCheck_rec(number,false);
+            return   repository.getSendingClientByRec_idAndCheck_rec(number,false);
         }catch (Exception e){
             System.out.println(e);
         }
         return new ResultModel(null,"error");
     }
-    static public ResultModel addNumberToClient(NumberModel numberModel){
+     public ResultModel addNumberToClient(NumberModel numberModel){
         try {
-            return   Repository.saveNumber(numberModel);
+            return   repository.saveNumber(numberModel);
         }catch (Exception e){
             System.out.println(e);
         }
         return new ResultModel(null,"error");
     }
-    static public ResultModel getNumbersToClient(int number){
+     public ResultModel getNumbersToClient(int number){
         try {
-            return   Repository.getNumbersByNumber(number);
+            return   repository.getNumbersByNumber(number);
         }catch (Exception e){
             System.out.println(e);
         }
         return new ResultModel(null,"error");
     }
-    static public ResultModel addMessage(MessageModel messageModel){
+     public ResultModel addMessage(MessageModel messageModel){
         try {
 
             addNumberToClient(new NumberModel(messageModel.send_id,messageModel.rec_id));
-            return   Repository.saveMessage(messageModel);
+            return   repository.saveMessage(messageModel);
         }catch (Exception e){
             System.out.println(e);
         }
         return new ResultModel(null,"error");
     }
-    static public ResultModel updateMessage(MessageModel messageModel){
+     public ResultModel updateMessage(MessageModel messageModel){
         try {
 
-            return   Repository.updateMessage(messageModel);
+            return   repository.updateMessage(messageModel);
         }catch (Exception e){
             System.out.println(e);
         }
         return new ResultModel(null,"error");
     }
-    static public ResultModel getMessageById(long message_id){
+     public ResultModel getMessageById(long message_id){
         try {
-            return   Repository.getMessageById(message_id);
+            return   repository.getMessageById(message_id);
         }catch (Exception e){
             System.out.println(e);
         }
         return new ResultModel(null,"error");
     }
-    static public ResultModel getMessagesByClient(int send_id,int rec_id){
+     public ResultModel getMessagesByClient(int send_id,int rec_id){
         try {
-            return   Repository.getMessagesByClient(send_id,rec_id);
+            return   repository.getMessagesByClient(send_id,rec_id);
         }catch (Exception e){
             System.out.println(e);
         }
         return new ResultModel(null,"error");
     }
-    static public ResultModel getAllMessagesByClient(int send_id,int rec_id){
+     public ResultModel getAllMessagesByClient(int send_id,int rec_id){
         try {
-            return   Repository.getAllMessagesByClient(send_id,rec_id);
+            return   repository.getAllMessagesByClient(send_id,rec_id);
         }catch (Exception e){
             System.out.println(e);
         }
         return new ResultModel(null,"error");
     }
-    static public ResultModel getSendingClientBySend_idAndRec_idAndCheck_rec(NumberModel numberModel){
+     public ResultModel getSendingClientBySend_idAndRec_idAndCheck_rec(NumberModel numberModel){
         try {
-            return   Repository.getSendingClientBySend_idAndRec_idAndCheck_rec(numberModel.getNumber(),numberModel.getClient_number(),false);
+            return   repository.getSendingClientBySend_idAndRec_idAndCheck_rec(numberModel.getNumber(),numberModel.getClient_number(),false);
         }catch (Exception e){
             System.out.println(e);
         }
         return new ResultModel(null,"error");
     }
-    static public ResultModel doneRecMessage(List<MessageModel> messageModels){
+     public ResultModel doneRecMessage(List<MessageModel> messageModels){
         try {
             ResultModel resultModel =new ResultModel(null,"error");;
             for (MessageModel messageModel: messageModels) {

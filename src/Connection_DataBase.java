@@ -192,7 +192,7 @@ public class Connection_DataBase {
 
             //ClientModel clientModel= (ClientModel) Repository.saveNumber(new NumberModel(1,2)).getModel();
            // System.out.println( clientModel);
-            System.out.println( Repository.updateMessage(new MessageModel((long) 2167272,"jj",1,2,true,false)).getMessage());
+            System.out.println( new Repository().updateMessage(new MessageModel((long) 2167272,"jj",1,2,true,false)).getMessage());
 
         }catch (Exception e){
             System.out.println(e);

@@ -6,11 +6,13 @@ import model.MessageModel;
 import model.NumberModel;
 import model.ResultModel;
 import request_response.Msg;
+import security.Json;
 
 import java.util.List;
 
 public class ControllerRequest {
-    public static Msg processService(Msg msg){
+    Service service=new Service();
+    public  Msg processService(Msg msg){
         switch (msg.header.getService()){
             case ServiceType.LogIn:
                 return logIn(msg);
@@ -30,13 +32,15 @@ public class ControllerRequest {
                 return addMessage(msg);
             case ServiceType.ShowAllMessageChat:
                 return getAllMessagesByClient(msg);
+            case ServiceType.getPublicKey:
+                return getPublicKey(msg);
             case ServiceType.done:
             default:
                 return new Msg();
         }
 
     }
-    public static Msg afterProcessService(Msg msg){
+    public  Msg afterProcessService(Msg msg){
         switch (msg.header.getService()){
             case ServiceType.Chat:
                 return afterChat(msg);
@@ -46,92 +50,100 @@ public class ControllerRequest {
         }
 
     }
-    private static Msg logIn(Msg msg){
+    private  Msg logIn(Msg msg){
         ClientModel clientModel= (ClientModel) msg.body;
-        ResultModel resultModel= Service.logIn(clientModel.getNumber(),clientModel.getPassword());
+        ResultModel resultModel= service.logIn(clientModel.getNumber(),clientModel.getPassword());
         msg.status=resultModel.isStatus();
         msg.body=resultModel.getModel();
         msg.message=resultModel.getMessage();
         msg.bodyList=resultModel.getModelList();
         return msg;
     }
-    private static Msg signUp(Msg msg){
+    private  Msg signUp(Msg msg){
         ClientModel clientModel= (ClientModel) msg.body;
-        ResultModel resultModel= Service.signUp(clientModel);
+        ResultModel resultModel= service.signUp(clientModel);
         msg.status=resultModel.isStatus();
         msg.body=resultModel.getModel();
         msg.message=resultModel.getMessage();
         msg.bodyList=resultModel.getModelList();
         return msg;
     }
-    private static Msg showNumbers(Msg msg){
-        ResultModel resultModel= Service.getNumbersToClient(msg.header.getRec_id());
+    private  Msg showNumbers(Msg msg){
+        ResultModel resultModel= service.getNumbersToClient(msg.header.getRec_id());
         msg.status=resultModel.isStatus();
         msg.body=resultModel.getModel();
         msg.message=resultModel.getMessage();
         msg.bodyList=resultModel.getModelList();
         return msg;
     }
-    private static Msg ShowSendingNumbers(Msg msg){
-        ResultModel resultModel= Service.ShowSendingNumbers(msg.header.getRec_id());
+    private  Msg ShowSendingNumbers(Msg msg){
+        ResultModel resultModel= service.ShowSendingNumbers(msg.header.getRec_id());
         msg.status=resultModel.isStatus();
         msg.body=resultModel.getModel();
         msg.message=resultModel.getMessage();
         msg.bodyList=resultModel.getModelList();
         return msg;
     }
-    private static Msg ChooseNumber(Msg msg){
+    private  Msg ChooseNumber(Msg msg){
         ClientModel clientModel= (ClientModel) msg.body;
-        ResultModel resultModel= Service.searchByNumber(clientModel.getNumber());
+        ResultModel resultModel= service.searchByNumber(clientModel.getNumber());
         msg.status=resultModel.isStatus();
         msg.body=resultModel.getModel();
         msg.message=resultModel.getMessage();
         msg.bodyList=resultModel.getModelList();
         return msg;
     }
-    private static Msg ShowAllMessageFromNumber(Msg msg){
+    private  Msg ShowAllMessageFromNumber(Msg msg){
         NumberModel numberModel= (NumberModel) msg.body;
-        ResultModel resultModel= Service.getMessagesByClient(numberModel.getNumber(),numberModel.getClient_number());
+        ResultModel resultModel= service.getMessagesByClient(numberModel.getNumber(),numberModel.getClient_number());
         msg.status=resultModel.isStatus();
         msg.body=resultModel.getModel();
         msg.message=resultModel.getMessage();
         msg.bodyList=resultModel.getModelList();
         return msg;
     }
-    private static Msg getAllMessagesByClient(Msg msg){
+    private  Msg getAllMessagesByClient(Msg msg){
         NumberModel numberModel= (NumberModel) msg.body;
-        ResultModel resultModel= Service.getAllMessagesByClient(numberModel.getNumber(),numberModel.getClient_number());
+        ResultModel resultModel= service.getAllMessagesByClient(numberModel.getNumber(),numberModel.getClient_number());
         msg.status=resultModel.isStatus();
         msg.body=resultModel.getModel();
         msg.message=resultModel.getMessage();
         msg.bodyList=resultModel.getModelList();
         return msg;
     }
-    private static Msg addMessage(Msg msg){
+    private  Msg addMessage(Msg msg){
         MessageModel messageModel= (MessageModel) msg.body;
-        ResultModel resultModel= Service.addMessage(messageModel);
+        ResultModel resultModel= service.addMessage(messageModel);
         msg.status=resultModel.isStatus();
         msg.body=resultModel.getModel();
         msg.message=resultModel.getMessage();
         msg.bodyList=resultModel.getModelList();
         return msg;
     }
-    private static Msg chat(Msg msg){
+    private  Msg chat(Msg msg){
         NumberModel numberModel= (NumberModel) msg.body;
-        ResultModel resultModel= Service.getSendingClientBySend_idAndRec_idAndCheck_rec(numberModel);
+        ResultModel resultModel= service.getSendingClientBySend_idAndRec_idAndCheck_rec(numberModel);
         msg.status=resultModel.isStatus();
         msg.body=resultModel.getModel();
         msg.message=resultModel.getMessage();
         msg.bodyList=resultModel.getModelList();
         return msg;
     }
-    private static Msg afterChat(Msg msg){
+    private  Msg afterChat(Msg msg){
         List<MessageModel> messageModelList= (List) msg.bodyList;
-        ResultModel resultModel= Service.doneRecMessage(messageModelList);
+        ResultModel resultModel= service.doneRecMessage(messageModelList);
         msg.status=resultModel.isStatus();
         msg.body=resultModel.getModel();
         msg.message=resultModel.getMessage();
         msg.bodyList=resultModel.getModelList();
+        return msg;
+    }
+    private  Msg getPublicKey(Msg msg){
+        Request.mapPublicKey.put(msg.header.getUniqueID(),msg.header.getPublicKey());
+        msg.header.setUniqueID(Request.uniqueID);
+        msg.header.setPublicKey(Request.publicKey);
+        msg.status=true;
+        msg.message="able to connect";
         return msg;
     }
 }

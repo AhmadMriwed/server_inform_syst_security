@@ -36,9 +36,7 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="ad4254c8-4463-433c-9f8e-777513dcbb19" object-ref="schemas/lhma/tables/message" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="ad4254c8-4463-433c-9f8e-777513dcbb19" dataset="lhma.client" active-filter-id="EMPTY_FILTER" />

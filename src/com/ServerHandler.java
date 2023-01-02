@@ -1,11 +1,15 @@
 package com;
 
 import controller.ControllerRequest;
+import controller.Request;
 import controller.ServiceType;
 import database.Service;
 import model.ClientModel;
 import model.ResultModel;
+import netscape.javascript.JSObject;
+import request_response.Header;
 import request_response.Msg;
+import security.Security;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -18,6 +22,7 @@ public class ServerHandler extends Thread{
     ServerSocket server = null;
     boolean checkRun = false;
     Socket client;
+    ControllerRequest controllerRequest= new ControllerRequest();
     ServerHandler(ServerSocket server){
         this.server=server;
     }
@@ -35,23 +40,37 @@ public class ServerHandler extends Thread{
         while (true) {
             if(!checkRun) continue;
             try {
+
                 client = server.accept();
                 ObjectOutputStream outToClient = new ObjectOutputStream(client.getOutputStream());
                 ObjectInputStream inFromClient = new ObjectInputStream(client.getInputStream());
                 //rec
+                var object =inFromClient.readObject();
+                Map<String, Object> map = (Map<String, Object>) object;
+                // TODO here1
+                map= Security.Decryption((String) map.get("securityType"),map);
 
-
-                Map<String, Object> map = (Map<String, Object>) inFromClient.readObject();
-                // TODO TDO
                 Msg msg = new Msg();
-                msg.fromMap(map);
-                //TODO service
-                msg = ControllerRequest.processService(msg);
+                if((boolean) map.get("status")){
 
-                //send
-                map = msg.toMap();
+                    msg.fromMap(map);
+                    //TODO service
+                    msg = controllerRequest.processService(msg);
+                    map = msg.toMap();
+
+                    //send
+                    //TODO here2
+                    map= Security.Encryption((String) map.get("securityType"),map);
+                    Header header=new Header().fromMap((Map<String, Object>) map.get("header"));
+                    header.setUniqueID(Request.uniqueID);
+                    map.put("header",header.toMap());
+
+                }
+
+
+
                 outToClient.writeObject(map);
-                msg = ControllerRequest.afterProcessService(msg);
+                msg = controllerRequest.afterProcessService(msg);
 
             } catch (Exception e) {
                 e.printStackTrace();
