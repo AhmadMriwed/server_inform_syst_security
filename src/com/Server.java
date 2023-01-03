@@ -99,6 +99,8 @@ public class Server {
        // ServerSocket welcomeSocket = new ServerSocket(5000);
        // ServerHandler serverHandler=new ServerHandler(welcomeSocket);
      //   System.out.println( Service.addNumberToClient(new NumberModel(2,1)).getMessage());
+        CSRGenerator gcsr = CSRGenerator.getInstance();
+        String csr = gcsr.getCSR("journaldev.com <https://www.journaldev.com>");
         new PGP();
 //        try {
 //            FileOutputStream fos = new FileOutputStream("object.dat");

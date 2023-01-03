@@ -9,6 +9,14 @@ public class GenerateKeys {
     private   PrivateKey privateKey;
     private   PublicKey publicKey;
 
+    public KeyPair getPair() {
+        return pair;
+    }
+
+    public KeyPairGenerator getKeyGen() {
+        return keyGen;
+    }
+
     public  GenerateKeys()
             throws NoSuchAlgorithmException, NoSuchProviderException {
         this.keyGen = KeyPairGenerator.getInstance("RSA");

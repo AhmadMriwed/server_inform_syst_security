@@ -7,7 +7,8 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 
 public class Json {
-    private static String path="S:/Users/hp/client/src/security/key.json";
+  //  private static String path="S:/Users/hp/client/src/security/key.json";
+    private static String path="C:/Users/Leen/IdeaProjects/client_inform_sys_security/src/security/key.json";
     public static Object put(Object key,Object value){
 
        return put(key,value,path);

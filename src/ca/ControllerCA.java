@@ -19,6 +19,8 @@ public class ControllerCA {
                 return genCertificateSignature(msg);
             case ServiceType.VerifyCertificateSignature:
                 return verifyCertificateSignature(msg);
+                case ServiceType.GetCertificateSignature:
+                return getCertificateSignature(msg);
             default:
                 return new Msg();
         }
@@ -30,6 +32,10 @@ public class ControllerCA {
         return msg;
     }
     private  Msg verifyCertificateSignature(Msg msg){
+        msg.fromMap(CertificateSignature.VerifyCertificateSignature(msg.toMap()));
+        return msg;
+    }
+    private  Msg getCertificateSignature(Msg msg){
         msg.fromMap(CertificateSignature.VerifyCertificateSignature(msg.toMap()));
         return msg;
     }

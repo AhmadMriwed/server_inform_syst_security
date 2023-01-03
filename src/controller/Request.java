@@ -24,7 +24,8 @@ public class Request {
     public  static Map<String, PublicKey> mapPublicKey=new HashMap<>();
     public static String pathPvKey="S:/Users/hp/IdeaProjects/sever/src/security/PvKey.dat";
     public static String pathPbKey="S:/Users/hp/IdeaProjects/sever/src/security/PbKey.dat";
-    public static String pathUniqueID="S:/Users/hp/IdeaProjects/sever/src/security/uniqueID.json";
+   // public static String pathUniqueID="S:/Users/hp/IdeaProjects/sever/src/security/uniqueID.json";
+    public static String pathUniqueID="C:/Users/Leen/IdeaProjects/server_inform_syst_security/src/security/uniqueID.json";
 
 
 
