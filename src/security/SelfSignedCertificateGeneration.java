@@ -82,7 +82,6 @@ public class SelfSignedCertificateGeneration {
 
                  X509CertImpl outCert = new X509CertImpl(info);
                  outCert.sign(issuerPrivateKey, issuerSigAlg);
-
                  return outCert;
              }catch(Exception ex){
                  ex.printStackTrace();

@@ -15,11 +15,13 @@ import java.util.Map;
 
 public class Msg implements Serializable {
    public Header header=new Header();
+   public CSR csr=new CSR();
     public  Model body;
     public List<Model> bodyList=new ArrayList<>();
     public boolean status=false;
     public String message;
     public String mac;
+    public String signature;
     public String securityType= SecurityType.Zero;
     public byte[] salt;
     public byte[] iv;
@@ -27,8 +29,10 @@ public class Msg implements Serializable {
     public Map<String,Object> toMap(){
         Map<String,Object> msg=new HashMap<>();
         msg.put("header",header.toMap());
+        msg.put("csr",csr.toMap());
         msg.put("status",status);
         msg.put("message",message);
+        msg.put("signature",signature);
         msg.put("mac",mac);
             msg.put("salt",salt);
 
@@ -50,6 +54,7 @@ public class Msg implements Serializable {
     }
     public Msg fromMap(Map<String,Object> map){
         header.fromMap((Map<String, Object>) map.get("header"));
+        csr.fromMap((Map<String, Object>) map.get("csr"));
         status= (boolean) map.get("status");
         message= (String) map.get("message");
         mac= (String) map.get("mac");
@@ -58,6 +63,7 @@ public class Msg implements Serializable {
 
         iv= (byte[]) map.get("iv");
         securityType= ( String) map.get("securityType");
+        signature= ( String) map.get("signature");
 
         if(map.get("body")!=null){
             body  = fromBody(((Map<String, Object>) map.get("body")));

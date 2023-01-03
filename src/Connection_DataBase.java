@@ -199,6 +199,7 @@ public class Connection_DataBase {
         }
 
 //        try {
+        
 //            Class.forName("com.mysql.cj.jdbc.Driver");
 //            Connection connection = DriverManager.getConnection(
 //                    "jdbc:mysql://localhost:3306/lhma", "root", ""

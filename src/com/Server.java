@@ -1,4 +1,5 @@
 package com;
+import controller.Request;
 import database.Service;
 import model.ClientModel;
 import model.NumberModel;
@@ -99,6 +100,23 @@ public class Server {
        // ServerHandler serverHandler=new ServerHandler(welcomeSocket);
      //   System.out.println( Service.addNumberToClient(new NumberModel(2,1)).getMessage());
         new PGP();
+//        try {
+//            FileOutputStream fos = new FileOutputStream("object.dat");
+//            ObjectOutputStream oos = new ObjectOutputStream(fos);
+//
+//            oos.writeObject(Request.publicKey);
+//
+//            // close writer
+//            oos.close();
+//
+//            FileInputStream fis = new FileInputStream("object.dat");
+//            ObjectInput ois = new ObjectInputStream(fis);
+//            System.out.println(ois.readObject());
+//
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+
         ServerController serverController=new ServerController();
         serverController.start();
 

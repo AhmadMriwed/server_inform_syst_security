@@ -13,7 +13,10 @@ import java.util.Map;
 public class Request {
     public static int port=5000;
     public static int portChat=5001;
+    public static int portCA=5002;
     public static String host="localhost";
+    public static String name="lma";
+    public static String http="www.lma.com";
     public  static PrivateKey privateKey;
     public  static PublicKey publicKey;
     public  static String securityType;

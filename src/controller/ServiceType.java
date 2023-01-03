@@ -11,5 +11,7 @@ public class ServiceType {
     public  static  final  String SendMessage="SendMessage";
     public  static  final  String ShowAllMessageChat="ShowAllMessageChat";
     public  static  final  String getPublicKey="getPublicKey";
+    public  static  final  String GenCertificateSignature="GenCertificateSignature";
+    public  static  final  String VerifyCertificateSignature="VerifyCertificateSignature";
     public  static  final  String done="done";
 }
